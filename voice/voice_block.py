@@ -50,9 +50,10 @@ class TwilioVoice(Block):
         super().configure(context)
         self._client = TwilioRestClient(self.creds.sid,
                                         self.creds.token)
-        self._server = WebEngine.create('helloworld', {'socket_port': 8184})
+        self._server = WebEngine.create('helloworld',
+                                        {'port': 8184},
+                                        context)
         self._server.add_handler(Speak(self._messages))
-        context.hooks.attach('after_blocks_start', WebEngine.start)
 
     def process_signals(self, signals):
         for s in signals:
